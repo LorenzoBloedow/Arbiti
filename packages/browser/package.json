@@ -1,7 +1,7 @@
 {
 	"name": "@arbiti/browser",
 	"type": "module",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Framework-agnostic library for running Arbiti on the browser",
 	"main": "dist/index.js",
 	"files": [

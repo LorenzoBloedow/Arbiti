@@ -59,7 +59,7 @@ export async function registerBrowser({ userId }: { userId?: string }) {
 
 					const browserUuidCache = getCache()?.browserUuid;
 					const browserUuid = browserUuidCache || crypto.randomUUID();
-					await Arbiti.registerBrowser({
+					const res = await Arbiti.registerBrowser({
 						appUuid: window.Arbiti.appUuid,
 						userId,
 						browserUuid,
@@ -75,6 +75,13 @@ export async function registerBrowser({ userId }: { userId?: string }) {
 						timezone:
 							Intl.DateTimeFormat().resolvedOptions().timeZone,
 					});
+
+					if (!res.ok) {
+						return log(
+							`Failed to register browser: ${await res.text()}`,
+							"error"
+						);
+					}
 
 					if (!browserUuidCache) {
 						log("Browser registered for the first time", "info");
