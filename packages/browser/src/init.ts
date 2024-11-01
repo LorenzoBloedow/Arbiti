@@ -103,24 +103,7 @@ export async function init(
 		logLevel,
 	};
 
-	if (userId) {
-		log("Setting user ID", "info");
-		const cachedUserId = getCache()?.userId;
-		if (cachedUserId !== userId) {
-			log(
-				"User ID not found or is different from cache. Refreshing user ID",
-				"info"
-			);
-			await setUser(userId);
-			updateCache({
-				userId,
-			});
-		}
-		log("User ID set successfully", "info");
-	}
-	// @ts-ignore
-	window.Arbiti.userId = getCache()?.userId;
-
+	// Register service worker
 	if ("serviceWorker" in navigator) {
 		await Arbiti.retry(
 			async () =>
@@ -163,6 +146,24 @@ export async function init(
 		);
 		return;
 	}
+
+	if (userId) {
+		log("Setting user ID", "info");
+		const cachedUserId = getCache()?.userId;
+		if (cachedUserId !== userId) {
+			log(
+				"User ID not found or is different from cache. Refreshing user ID",
+				"info"
+			);
+			await setUser(userId);
+			updateCache({
+				userId,
+			});
+		}
+		log("User ID set successfully", "info");
+	}
+	// @ts-ignore
+	window.Arbiti.userId = getCache()?.userId;
 
 	if (autoRegister) {
 		await registerBrowser({
