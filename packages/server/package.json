@@ -1,7 +1,7 @@
 {
 	"name": "@arbiti/server",
 	"type": "module",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"main": "dist/index.js",
 	"author": "Arbiti.com",
 	"license": "MIT",
@@ -12,7 +12,8 @@
 	],
 	"scripts": {
 		"build": "rimraf dist && tsc",
-		"build:dev": "rimraf dist && tsc"
+		"build:dev": "rimraf dist && tsc",
+		"prepublishOnly": "nr build"
 	},
 	"dev": "tsc -w",
 	"devDependencies": {

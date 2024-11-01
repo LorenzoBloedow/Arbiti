@@ -1,7 +1,7 @@
 {
 	"name": "@arbiti/browser",
 	"type": "module",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "Framework-agnostic library for running Arbiti on the browser",
 	"main": "dist/index.js",
 	"files": [
@@ -13,7 +13,8 @@
 		"bundleServiceWorker": "esbuild src/arbitiServiceWorker.ts --format=esm --bundle --outfile=dist/arbitiServiceWorker.js --banner:js=//Arbiti_Service_Worker_Identifier_Comment_Do_Not_Modify_Or_Use_In_Your_Code",
 		"build": "rimraf dist && tsc && nr bundleServiceWorker && ARBITI_ENV=production node ../../scripts/setEnv.mjs dist/env.js",
 		"build:dev": "rimraf dist && tsc && nr bundleServiceWorker && node ../../scripts/setEnv.mjs dist/env.js",
-		"dev": "tsc -w"
+		"dev": "tsc -w",
+		"prepublishOnly": "nr build"
 	},
 	"keywords": [
 		"browser",
