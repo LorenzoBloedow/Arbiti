@@ -1,7 +1,7 @@
 {
 	"name": "@arbiti/core",
 	"type": "module",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Core assets and functions for @arbiti packages",
 	"main": "dist/index.js",
 	"files": [
