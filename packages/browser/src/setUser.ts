@@ -13,7 +13,7 @@ export async function setUser(
 		log("Browser UUID not found", "info");
 		log("Registering browser automatically", "info");
 		// @ts-ignore
-		browserUuid = await registerBrowser({ userId });
+		browserUuid = await registerBrowser({});
 	}
 
 	const res = await Arbiti.setUser({
@@ -24,10 +24,15 @@ export async function setUser(
 
 	if (!res.ok) {
 		throw log(
-			`Failed to set user ID: ${JSON.stringify((await res).text())}`,
+			`Failed to set user ID: ${JSON.stringify(await res.text())}`,
 			"error"
 		);
 	}
+
+	// Update the browser item with the new user ID
+	await registerBrowser({
+		userId,
+	});
 
 	return {
 		userId,

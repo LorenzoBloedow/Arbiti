@@ -4,7 +4,7 @@ import { env } from "./env";
 import { getCache } from "./getCache";
 import { updateCache } from "./updateCache";
 
-export async function registerBrowser({ userId }: { userId?: string }) {
+export async function registerBrowser({ userId }: { userId?: string } = {}) {
 	const vapidKey = await Arbiti.retry(
 		async () => await (await fetch(`${env.WEBSITE_URL}/vapid.pub`)).text(),
 		{
