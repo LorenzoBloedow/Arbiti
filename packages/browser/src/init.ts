@@ -16,19 +16,20 @@ export type InitOptions = {
 	logLevel?: Window["Arbiti"]["logLevel"];
 	/** Automatically trigger a native notification permission prompt and register the browser if the prompt is accepted */
 	autoRegister?: boolean;
+	// TODO:
 	/** Setting this to true will filter all content from our servers and your dashboard */
-	filterContent?:
-		| boolean
-		| {
-				/** Setting this to true will filter the title from our servers and your dashboard */
-				title: boolean;
-				/** Setting this to true will filter the message from our servers and your dashboard */
-				message: boolean;
-				/** Setting this to true will filter the url from our servers and your dashboard */
-				url: boolean;
-				/** Setting this to true will filter the buttons from our servers and your dashboard */
-				buttons: boolean;
-		  };
+	// filterContent?:
+	// 	| boolean
+	// 	| {
+	// 			/** Setting this to true will filter the title from our servers and your dashboard */
+	// 			title: boolean;
+	// 			/** Setting this to true will filter the message from our servers and your dashboard */
+	// 			message: boolean;
+	// 			/** Setting this to true will filter the url from our servers and your dashboard */
+	// 			url: boolean;
+	// 			/** Setting this to true will filter the buttons from our servers and your dashboard */
+	// 			buttons: boolean;
+	// 	  };
 	/**
 	 * Your unique identifier for this user, it will be used to track
 	 * the authenticated user across browsers and devices. You can also set this later
