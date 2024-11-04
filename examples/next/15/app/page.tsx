@@ -5,7 +5,8 @@ import { sendNotification } from "./sendNotification";
 
 export default function Home() {
 	const defaultNotification = "Hello, world!";
-	const [notification, setNotification] = useState(defaultNotification);
+	const [notificationText, setNotificationText] =
+		useState(defaultNotification);
 	const [loading, setLoading] = useState(false);
 
 	return (
@@ -35,23 +36,25 @@ export default function Home() {
 						notifications
 					</p>
 
-					<div className="flex flex-col gap-4 items-center mt-4">
+					<div className="flex flex-col gap-4 items-center lg:flex-row mt-4">
 						<input
-							className="px-5 py-3 text-center bg-gray-950 border-2 border-white rounded-md w-72 lg:w-[50rem]"
+							className="px-5 py-2 text-center bg-white text-black rounded-md w-72 lg:w-[30rem]"
 							type="text"
 							placeholder="Your awesome notification here"
 							defaultValue={defaultNotification}
-							onChange={(e) => setNotification(e.target.value)}
+							onChange={(e) =>
+								setNotificationText(e.target.value)
+							}
 						/>
 						{!loading && (
 							<button
 								onClick={() => {
 									setLoading(true);
-									sendNotification(notification).then(() =>
-										setLoading(false)
+									sendNotification(notificationText).finally(
+										() => setLoading(false)
 									);
 								}}
-								className="p-2 bg-blue-500 text-white rounded-md w-52"
+								className="p-2 bg-blue-500 text-white rounded-md w-52 hover:brightness-90"
 							>
 								Send Notification
 							</button>

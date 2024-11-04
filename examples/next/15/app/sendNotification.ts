@@ -1,15 +1,10 @@
 "use server";
-import { Arbiti } from "@arbiti/server";
+import { Arbiti } from "@arbiti/next";
 
 export async function sendNotification(message: string) {
-	const result = await Arbiti.sendNotification({
+	return Arbiti.sendNotification({
 		title: "Welcome to Arbiti! 🎉",
 		message,
-		userId: "test",
+		userId: "next-15-example",
 	});
-
-	if (result.error) {
-		throw result.message;
-	}
-	return result;
 }
