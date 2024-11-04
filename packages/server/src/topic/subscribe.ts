@@ -11,13 +11,7 @@ type SubscribeParams = Pick<
 export function subscribe(params: SubscribeParams) {
 	if (
 		!params.appUuid &&
-		// @ts-ignore
-		(typeof process !== "object" ||
-			// @ts-ignore
-			typeof process.env !== "object" ||
-			// @ts-ignore
-			!process.env.ARBITI_APP_UUID) &&
-		// Support Next.js actions without needing to repeat the UUID for server and client
+		!process.env.ARBITI_APP_UUID &&
 		!process.env.NEXT_PUBLIC_ARBITI_APP_UUID
 	) {
 		throw log(

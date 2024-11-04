@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "ES2022",
+		"declaration": true,
+		"outDir": "./dist",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "Bundler",
+		"jsx": "react",
+		"types": ["node", "react", "./src/arbiti.d.ts"]
+	},
+	"include": ["src"],
+	"exclude": ["node_modules", "**/*.test.ts"]
+}

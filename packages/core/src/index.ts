@@ -6,6 +6,7 @@ import { env } from "./env";
 import { sendNotification } from "./sendNotification";
 import { unsubscribe } from "./topic/unsubscribe";
 import { setUser } from "./setUser";
+import { list } from "./topic/list";
 const Arbiti = {
 	env,
 	retry,
@@ -16,6 +17,7 @@ const Arbiti = {
 	topic: {
 		subscribe,
 		unsubscribe,
+		list,
 	},
 	setUser,
 };

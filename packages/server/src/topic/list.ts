@@ -1,14 +1,12 @@
-import { Arbiti } from "@arbiti/core";
+import Arbiti from "@arbiti/core";
 import { log } from "../log";
 
-type UnsubscribeParams = Pick<
-	Parameters<typeof Arbiti.topic.unsubscribe>[0],
-	"browserUuid" | "topics"
-> & {
-	appUuid?: string;
-};
+type ListParams = Pick<
+	Parameters<typeof Arbiti.topic.subscribe>[0],
+	"browserUuid" | "appUuid"
+>;
 
-export function unsubscribe(params: UnsubscribeParams) {
+export function list(params: ListParams) {
 	if (
 		!params.appUuid &&
 		!process.env.ARBITI_APP_UUID &&
@@ -20,7 +18,7 @@ export function unsubscribe(params: UnsubscribeParams) {
 		);
 	}
 
-	return Arbiti.topic.unsubscribe({
+	return Arbiti.topic.list({
 		...params,
 		// @ts-ignore
 		appUuid:

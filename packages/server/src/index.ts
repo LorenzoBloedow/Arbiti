@@ -1,4 +1,5 @@
 import { sendNotification } from "./sendNotification";
+import { list } from "./topic/list";
 import { subscribe } from "./topic/subscribe";
 import { unsubscribe } from "./topic/unsubscribe";
 
@@ -7,6 +8,7 @@ const Arbiti = {
 	topic: {
 		subscribe,
 		unsubscribe,
+		list,
 	},
 };
 

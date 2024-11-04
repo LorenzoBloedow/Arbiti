@@ -1,7 +1,7 @@
 {
 	"name": "@arbiti/core",
 	"type": "module",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "Core assets and functions for @arbiti packages",
 	"main": "dist/index.js",
 	"files": [
@@ -11,7 +11,7 @@
 	],
 	"scripts": {
 		"build": "rimraf dist && tsc && ARBITI_ENV=production node ../../scripts/setEnv.mjs dist/env.js",
-		"build:dev": "rimraf dist && tsc && node ../../scripts/setEnv.mjs dist/env.js",
+		"build:dev": "rimraf dist && tsc && ARBITI_ENV=development node ../../scripts/setEnv.mjs dist/env.js",
 		"dev": "tsc -w",
 		"prepublishOnly": "nr build"
 	},
