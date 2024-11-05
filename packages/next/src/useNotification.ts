@@ -22,7 +22,6 @@ export function useNotification() {
 	}, []);
 
 	useEffect(() => {
-		console.log("TOPICS", topics, _topics);
 		_setTopics(topics === null ? [] : topics);
 
 		if (topics === null) {
