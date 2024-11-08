@@ -1,7 +1,7 @@
 {
 	"name": "@arbiti/wizard",
 	"type": "module",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"main": "dist/index.js",
 	"author": "Arbiti.com",
 	"license": "MIT",
@@ -28,7 +28,7 @@
 		"typescript": "^5.6.3"
 	},
 	"dependencies": {
-		"@arbiti/browser": "file:.yalc/@arbiti/browser",
+		"@arbiti/browser": "0.1.6",
 		"@inquirer/prompts": "^7.0.1",
 		"acorn": "^8.14.0",
 		"acorn-jsx-walk": "^2.0.0",
