@@ -1,5 +1,5 @@
-import Arbiti from "@arbiti/next";
 import type { NextConfig } from "next";
+import { Arbiti } from "@arbiti/next";
 
 const nextConfig: NextConfig = Arbiti.withArbitiConfig({});
 
