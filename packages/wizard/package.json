@@ -1,0 +1,49 @@
+{
+	"name": "@arbiti/wizard",
+	"type": "module",
+	"version": "0.1.0",
+	"main": "dist/index.js",
+	"author": "Arbiti.com",
+	"license": "MIT",
+	"files": [
+		"dist",
+		"package.json",
+		"tsconfig.json"
+	],
+	"bin": "dist/index.js",
+	"scripts": {
+		"build": "rimraf dist && tsc && ARBITI_ENV=production node ../../scripts/setEnv.mjs dist/env.js",
+		"build:dev": "rimraf dist && tsc && ARBITI_ENV=development node ../../scripts/setEnv.mjs dist/env.js",
+		"dev": "tsc -w",
+		"prepublishOnly": "nr build"
+	},
+	"devDependencies": {
+		"@types/escodegen": "^0.0.10",
+		"@types/figlet": "^1.7.0",
+		"@types/gitignore-parser": "^0.0.3",
+		"@types/hh-mm-ss": "^1.2.3",
+		"@types/node": "^22.9.0",
+		"@types/semver": "^7.5.8",
+		"rimraf": "^6.0.1",
+		"typescript": "^5.6.3"
+	},
+	"dependencies": {
+		"@arbiti/browser": "file:.yalc/@arbiti/browser",
+		"@inquirer/prompts": "^7.0.1",
+		"acorn": "^8.14.0",
+		"acorn-jsx-walk": "^2.0.0",
+		"acorn-typescript": "^1.4.13",
+		"acorn-walk": "^8.3.4",
+		"cli-spinners": "^3.2.0",
+		"colors": "^1.4.0",
+		"escodegen": "^2.1.0",
+		"escodegen-wallaby": "^1.6.44",
+		"figlet": "^1.8.0",
+		"gitignore-parser": "^0.0.2",
+		"open": "^10.1.0",
+		"ora": "^8.1.1",
+		"package-manager-detector": "^0.2.2",
+		"prettier": "^3.3.3",
+		"semver": "^7.6.3"
+	}
+}
