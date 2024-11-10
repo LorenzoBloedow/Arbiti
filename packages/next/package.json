@@ -1,6 +1,6 @@
 {
 	"name": "@arbiti/next",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"type": "module",
 	"description": "Official Arbiti wrapper for Next.js",
 	"main": "dist/index.js",
@@ -15,8 +15,8 @@
 	"author": "Arbiti.com",
 	"license": "MIT",
 	"dependencies": {
-		"@arbiti/browser": "0.1.5",
-		"@arbiti/server": "0.1.3"
+		"@arbiti/browser": "0.1.7",
+		"@arbiti/server": "0.1.4"
 	},
 	"files": [
 		"dist",

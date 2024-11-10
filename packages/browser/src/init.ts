@@ -5,6 +5,7 @@ import { registerBrowser } from "./registerBrowser";
 import { setUser } from "./setUser";
 import { updateCache } from "./updateCache";
 import { getCache } from "./getCache";
+import { env } from "./env";
 
 export type InitOptions = {
 	/** The unique identifier of your Arbiti app */
@@ -104,6 +105,35 @@ export async function init(
 		logLevel,
 	};
 
+	// Register that user has fully loaded the page after clicking on a notification
+	const notificationUuid = location.search.match(
+		"arbitiNotification=(.+)&*"
+	)?.[1];
+	if (notificationUuid) {
+		const onLoad = async () => {
+			await fetch(
+				`${env.API_ENDPOINT}/${env.API_VERSION}/notification/event`,
+				{
+					method: "POST",
+					headers: {
+						"x-app-uuid": appUuid,
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						eventType: "loaded",
+						notificationUuid,
+					}),
+				}
+			);
+		};
+
+		if (document.readyState === "complete") {
+			onLoad();
+		} else {
+			document.addEventListener("load", onLoad, { once: true });
+		}
+	}
+
 	// Register service worker
 	if ("serviceWorker" in navigator) {
 		await Arbiti.retry(
@@ -139,6 +169,13 @@ export async function init(
 			if (event.data.type === "log") {
 				log(event.data.message, event.data.level);
 			}
+		});
+
+		navigator.serviceWorker.ready.then((registration) => {
+			registration.active?.postMessage({
+				type: "init",
+				appUuid,
+			});
 		});
 	} else {
 		log(

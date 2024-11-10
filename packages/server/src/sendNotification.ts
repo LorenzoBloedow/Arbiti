@@ -19,6 +19,7 @@ export function sendNotification(
 		| "sendAt"
 		| "silent"
 		| "vibration"
+		| "url"
 	> & {
 		/** This parameter takes precedence over the ARBITI_APP_UUID environment variable */
 		appUuid?: string;

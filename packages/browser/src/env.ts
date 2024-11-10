@@ -1,8 +1,8 @@
-import { Arbiti } from "@arbiti/core";
+import { env as coreEnv } from "@arbiti/core/dist/env";
 
 const common = {};
 
 export const env =
 	process.env.ARBITI_ENV === "production"
-		? { ...common, ...Arbiti.env }
-		: { ...common, ...Arbiti.env };
+		? { ...common, ...coreEnv }
+		: { ...common, ...coreEnv };

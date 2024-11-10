@@ -28,7 +28,7 @@
 		"typescript": "^5.6.3"
 	},
 	"dependencies": {
-		"@arbiti/browser": "0.1.6",
+		"@arbiti/browser": "0.1.7",
 		"@inquirer/prompts": "^7.0.1",
 		"acorn": "^8.14.0",
 		"acorn-jsx-walk": "^2.0.0",

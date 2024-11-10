@@ -191,6 +191,8 @@ export type SendNotification = {
 	title: string;
 	/** The message of the notification users see when they expand it */
 	message: string;
+	/** The URL to open when the user clicks the notification. Defaults to the root of your website */
+	url?: string;
 	/** URL of the image used to represent the notification when there isn't enough space to display the notification itself */
 	badge?: string;
 	/** Arbitrary data you may want to send together with the notification.
@@ -262,6 +264,7 @@ export async function sendNotification({
 	userId,
 	browserUuid,
 	apiKey,
+	url,
 }: SendNotification): Promise<{
 	error?:
 		| "ClientError"
@@ -283,7 +286,10 @@ export async function sendNotification({
 					title,
 					message,
 					badge,
-					extraData,
+					extraData: {
+						...extraData,
+					},
+					url,
 					dir,
 					icon,
 					lang,
