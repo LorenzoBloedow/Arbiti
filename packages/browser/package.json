@@ -1,13 +1,14 @@
 {
 	"name": "@arbiti/browser",
 	"type": "module",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"description": "Framework-agnostic library for running Arbiti on the browser",
 	"main": "dist/index.js",
 	"files": [
 		"dist",
 		"package.json",
-		"tsconfig.json"
+		"tsconfig.json",
+		"README.md"
 	],
 	"scripts": {
 		"bundleServiceWorker": "esbuild src/arbitiServiceWorker.ts --format=esm --bundle --outfile=dist/arbitiServiceWorker.js --banner:js=//Arbiti_Service_Worker_Identifier_Comment_Do_Not_Modify_Or_Use_In_Your_Code",

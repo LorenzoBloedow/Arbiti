@@ -1,13 +1,14 @@
 {
 	"name": "@arbiti/core",
 	"type": "module",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Core assets and functions for @arbiti packages",
 	"main": "dist/index.js",
 	"files": [
 		"dist",
 		"package.json",
-		"tsconfig.json"
+		"tsconfig.json",
+		"README.md"
 	],
 	"scripts": {
 		"build": "rimraf dist && tsc && ARBITI_ENV=production node ../../scripts/setEnv.mjs dist/env.js",
