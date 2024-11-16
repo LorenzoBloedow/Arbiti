@@ -903,6 +903,17 @@ async function setup() {
 				spinner: cliSpinners.dots,
 			});
 			packageSpinner.start("Installing the universal Arbiti packages...");
+
+			const packages = ["@arbiti/browser", "@arbiti/server"];
+			const installCommand = await getInstallCommand(packages);
+
+			await execPromise(installCommand, {
+				cwd: projectDir,
+			});
+
+			packageSpinner.succeed(
+				`Successfully installed ${packages.join(", ")}`
+			);
 		}
 
 		const success = ora({
