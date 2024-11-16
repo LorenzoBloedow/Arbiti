@@ -36,13 +36,17 @@ function capitalize(str: string) {
 }
 
 async function getPackageJson(projectDir: string) {
-	return (
-		await import(resolve(projectDir, "package.json"), {
-			with: {
-				type: "json",
-			},
-		})
-	).default;
+	try {
+		return (
+			await import(resolve(projectDir, "package.json"), {
+				with: {
+					type: "json",
+				},
+			})
+		).default;
+	} catch {
+		return null;
+	}
 }
 
 async function getCredentials() {
@@ -655,14 +659,16 @@ async function createApp(projectDir: string) {
 		const devAppName = await input({
 			message: "What's the name of your development app?",
 			default:
-				(await getPackageJson(projectDir)).name + "-dev" ||
+				((await getPackageJson(projectDir))?.name || "project") +
+					"-dev" ||
 				dirname(projectDir) + "-dev" ||
 				"my-awesome-app-dev",
 		});
 		const prodAppName = await input({
 			message: "What's the name of your production app?",
 			default:
-				(await getPackageJson(projectDir)).name + "-prod" ||
+				((await getPackageJson(projectDir))?.name || "project") +
+					"-prod" ||
 				dirname(projectDir) + "-prod" ||
 				"my-awesome-app-prod",
 		});
@@ -727,7 +733,9 @@ async function createApp(projectDir: string) {
 		const appName = await input({
 			message: `What's the name of your ${environment} app?`,
 			default:
-				(await getPackageJson(projectDir)).name + `-${environment}` ||
+				(await getPackageJson(projectDir))?.name ||
+				"project" ||
+				+`-${environment}` ||
 				dirname(projectDir) + `-${environment}` ||
 				`my-awesome-app-${environment}`,
 		});
