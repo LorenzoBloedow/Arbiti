@@ -166,14 +166,16 @@ async function detectFramework(projectDir: string) {
 	// Detect the framework by checking the package.json file
 	const packageJson = await getPackageJson(projectDir);
 
-	if (packageJson.dependencies.next) {
-		if (semver.major(packageJson.dependencies.next) === 15) {
-			return {
-				name: "next",
-				version: "15",
-			};
+	try {
+		if (packageJson.dependencies.next) {
+			if (semver.major(packageJson.dependencies.next) === 15) {
+				return {
+					name: "next",
+					version: "15",
+				};
+			}
 		}
-	}
+	} catch {}
 
 	return null;
 }
