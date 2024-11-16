@@ -29,6 +29,61 @@ import { extend } from "acorn-jsx-walk";
 import * as prettier from "prettier";
 import { copyFile, mkdir } from "fs/promises";
 
+const args = process.argv.slice(2);
+
+if (args[0] === "pull" && args[1] === "worker") {
+	console.log(
+		"Welcome to the Arbiti CLI wizard, we're excited to have you here!"
+			.magenta.bold
+	);
+	console.log("Let's pull your service worker to the public directory!");
+
+	let projectDir: string;
+	do {
+		projectDir = await input({
+			message: "What's the path to your project directory?",
+			default: "./",
+		});
+		if (!existsSync(projectDir)) {
+			console.log(
+				"The specified directory doesn't exist. Please try again".red
+			);
+		}
+	} while (!existsSync(projectDir));
+
+	console.log("Putting Arbiti service worker in the public directory...");
+
+	try {
+		const workerPath = resolve(
+			dirname(fileURLToPath(arbitiBrowserDir)),
+			"arbitiServiceWorker.js"
+		);
+		const finalWorkerPath = resolve(projectDir, "public");
+		if (!existsSync(finalWorkerPath)) {
+			console.log(
+				"'public' directory not found. Placing service worker file in a temp directory..."
+					.yellow
+			);
+			const tempPath = resolve(projectDir, "temp");
+
+			mkdirSync(tempPath);
+			await copyFile(
+				workerPath,
+				resolve(tempPath, "arbitiServiceWorker.js")
+			);
+		} else {
+			await copyFile(
+				workerPath,
+				resolve(finalWorkerPath, "arbitiServiceWorker.js")
+			);
+		}
+		console.log("Successfully pulled Arbiti worker file".green);
+	} catch (err) {
+		console.log("Failed to pull Arbiti worker file".red);
+	}
+	process.exit(0);
+}
+
 const execPromise = promisify(exec);
 
 function capitalize(str: string) {
