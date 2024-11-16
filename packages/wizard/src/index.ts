@@ -4,7 +4,7 @@ import { env } from "./env.js";
 import open from "open";
 import "colors";
 import cliSpinners from "cli-spinners";
-import { confirm, input, select } from "@inquirer/prompts";
+import { confirm, input, select, Separator } from "@inquirer/prompts";
 import ora from "ora";
 import { dirname, resolve } from "path";
 import semver from "semver";
@@ -30,6 +30,10 @@ import * as prettier from "prettier";
 import { copyFile, mkdir } from "fs/promises";
 
 const execPromise = promisify(exec);
+
+function capitalize(str: string) {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 async function getPackageJson(projectDir: string) {
 	return (
@@ -811,42 +815,95 @@ async function setup() {
 		  }[]
 		| undefined;
 	if (browserAnswer) {
-		console.log(
-			"Now let's create your Arbiti app so you can access your dashboard on Arbiti.com"
-				.white
-		);
-		appData = await createApp(projectDir);
-	}
+		const createAppAnswer = await confirm({
+			message:
+				"Do you want to create an app so you can access your dashboard on Arbiti.com?",
+			default: true,
+		});
+		if (createAppAnswer) {
+			appData = await createApp(projectDir);
+		} else {
+			const selectAppAnswer = await confirm({
+				message:
+					"Do you want to select an existing app to continue the setup?",
+				default: true,
+			});
 
-	const framework = await detectFramework(projectDir);
+			if (selectAppAnswer) {
+				const apps = await fetch(`${env.WEBSITE}/api/app`, {
+					headers: {
+						Authorization: `Bearer ${(await getCredentials()).jwt}`,
+					},
+				}).then(async (res) => {
+					if (res.status === 404) {
+						console.log("No app found. Skipping app setup".yellow);
 
-	if (framework) {
-		if (framework.name === "next" && framework.version === "15") {
-			console.log("✔".green + " Detected Next.js 15 project!".white);
-			try {
-				await setupNext15(projectDir, appData);
-			} catch (err) {
-				console.log("Failed to setup Next.js 15 project".red);
-				return;
+						return null;
+					} else {
+						const data = (await res.json()).data;
+						if (!res.ok || !data) {
+							throw new Error("Failed to fetch apps");
+						}
+						return data;
+					}
+				});
+
+				if (apps) {
+					const appChoices: Separator[] = apps.map((app: any) => ({
+						name: `${app.name} (${capitalize(app.environment)})`,
+						value: app,
+					}));
+
+					const selectedApp = await select({
+						message: "Select an app to continue the setup",
+						choices: appChoices,
+					});
+
+					// TODO: Fix type errors
+					appData = [
+						{
+							// @ts-ignore
+							appUuid: selectedApp.appUuid,
+							// @ts-ignore
+							apiKey: selectedApp.apiKey,
+							// @ts-ignore
+							environment: selectedApp.environment,
+						},
+					];
+				}
 			}
 		}
-	} else {
-		console.log(
-			"We either couldn't detect your framework or it's not supported yet"
-				.yellow
-		);
-		const packageSpinner = ora({
-			spinner: cliSpinners.dots,
-		});
-		packageSpinner.start("Installing the universal Arbiti packages...");
-	}
 
-	const success = ora({
-		spinner: cliSpinners.mindblown,
-		text: `You're all set! And it only took ${Math.ceil((Date.now() - startTime) / 1000)} seconds. Mind-blowing, right?`,
-	}).start();
-	await new Promise((resolve) => setTimeout(resolve, 5000));
-	success.succeed();
+		const framework = await detectFramework(projectDir);
+
+		if (framework) {
+			if (framework.name === "next" && framework.version === "15") {
+				console.log("✔".green + " Detected Next.js 15 project!".white);
+				try {
+					await setupNext15(projectDir, appData);
+				} catch (err) {
+					console.log("Failed to setup Next.js 15 project".red);
+					return;
+				}
+			}
+		} else {
+			console.log(
+				"We either couldn't detect your framework or it's not supported yet"
+					.yellow
+			);
+			const packageSpinner = ora({
+				spinner: cliSpinners.dots,
+			});
+			packageSpinner.start("Installing the universal Arbiti packages...");
+		}
+
+		const success = ora({
+			spinner: cliSpinners.mindblown,
+			text: `You're all set! And it only took ${Math.ceil((Date.now() - startTime) / 1000)} seconds. Mind-blowing, right?`,
+		}).start();
+		await new Promise((resolve) => setTimeout(resolve, 5000));
+		success.succeed();
+	}
 }
 
 await setup();
